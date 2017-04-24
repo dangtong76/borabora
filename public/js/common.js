@@ -189,7 +189,7 @@ if (typeof(COMMON_JS) === 'undefined') {
         var start, end;
         var i = 0;
 
-        name = cookie_prefix + cookie_name
+        var name = cookie_prefix + cookie_name
 
         for (i = 0; i <= document.cookie.length; i++) {
             start = i;

@@ -15,7 +15,7 @@
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    @yield('style')
+@yield('style')
 
 
 <!-- Scripts -->
@@ -51,21 +51,18 @@
         </li>
         <li class="has-sub"><a href="#"><span><i class="fa fa-fw fa-shopping-bag"></i> 상품관리</span></a>
             <ul>
-                <li><a href="#"><span>수집 대상별 상품보기</span></a></li>
-                <li class="has-sub"><a href="#"><span>타겟별 상품보기</span></a>
+                <li class="has-sub"><a href="#"><span>신규상품 관리</span></a>
                     <ul>
-                        <li><a href="#"><span>www.balaan.co.kr</span></a></li>
-                        <li><a href="#"><span>www.balaankids.co.kr</span></a></li>
+                        <li><a href="#"><span>발란 성인</span></a></li>
+                        <li><a href="#"><span>발란 키즈</span></a></li>
                     </ul>
                 </li>
-                <li class="has-sub"><a href="#"><span>브랜드별 상품보기</span></a>
+                <li class="has-sub"><a href="#"><span>등록상품 관리</span></a>
                     <ul>
-                        <li><a href="#"><span>GUCCHI</span></a></li>
-                        <li><a href="#"><span>FENDI</span></a></li>
-                        <li><a href="#"><span>BUBBERY</span></a></li>
+                        <li><a href="#"><span>발란 성인</span></a></li>
+                        <li><a href="#"><span>발란 키즈</span></a></li>
                     </ul>
                 </li>
-                <li><a href="#"><span>신규상품 (7일 이내)</span></a></li>
                 <li><a href="#"><span>상품변경 히스토리</span></a></li>
                 <li><a href="#"><span>미연결 상품</span></a></li>
                 <li><a href="#"><span>삭제상품관리</span></a></li>

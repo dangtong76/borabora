@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\CategoryUrl;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -14,13 +16,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.dashboard');
-        //$prodNames = Product::all();
 
-        //foreach ($prodNames as $prodName) {
-        //    echo $prodName->name;
-        //    echo "\n";
-        //}
+        $products = Product::with(['shop','brand'])->latest()->paginate(15);
+        $categoryurls = CategoryUrl::all();
+        $brands = Brand::all();
+
+        return view('products.dashboard',[
+            'categoryurls' => $categoryurls,
+            'brands' => $brands,
+            'products' => $products,
+        ]);
     }
 
 
