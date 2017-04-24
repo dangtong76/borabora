@@ -1,6 +1,9 @@
 <?php
 
+use App\Member;
+use App\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +14,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+
+
+        $this->disableForeignKeyChecks();
+
+        $this->call(BrandsTableSeeder::class);
+        $this->call(ShopsTableSeeder::class);
+        $this->call(CategoryUrlsTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(MembersTableSeeder::class);
+        $this->call(CartsTableSeeder::class);
+
+        $this->restoreForeignKeyChecks();
     }
+
+    protected function disableForeignKeyChecks()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+    }
+
+    protected function restoreForeignKeyChecks()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    }
+
 }
