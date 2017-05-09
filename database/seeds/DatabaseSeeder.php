@@ -1,7 +1,5 @@
 <?php
 
-use App\Member;
-use App\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BrandsTableSeeder::class);
         $this->call(ShopsTableSeeder::class);
         $this->call(CategoryUrlsTableSeeder::class);
+        $this->call(TargetsTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
         $this->call(MembersTableSeeder::class);
         $this->call(CartsTableSeeder::class);

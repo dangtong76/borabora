@@ -23,6 +23,7 @@ class CreateShopsTable extends Migration
             $table->string('shop_country')->nullable()->comment('쇼핑몰/부띠크 국가');
             $table->dateTime('created_at')->comment('쇼핑몰/부띠끄 정보 등록일시');
             $table->dateTime('updated_at')->comment('쇼핑몰/부띠끄 정보 변경일시');
+            $table->dateTime('deleted_at')->nullable()->comment('Software Delete 일시');
         });
     }
 

@@ -20,6 +20,7 @@ class CreateBrandsTable extends Migration
             $table->string('brand_country')->nullable()->comment('브랜드 국적');
             $table->dateTime('created_at')->comment('쇼핑몰/부띠끄 정보 등록일시');
             $table->dateTime('updated_at')->comment('쇼핑몰/부띠끄 정보 변경일시');
+            $table->dateTime('deleted_at')->nullable()->comment('Software Delete 일시');
         });
     }
 

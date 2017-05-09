@@ -23,6 +23,7 @@ class CreateCategoryUrlsTable extends Migration
             $table->String('category_borabora_name',255)->index()->comment('BoraBora Platform에서 명명한 카테고리 이름');
             $table->dateTime('created_at')->comment('카테고리 URL 등록일시');
             $table->dateTime('updated_at')->comment('카테고리 URL 변경일시');
+            $table->dateTime('deleted_at')->nullable()->comment('Software Delete 일시');
 
 
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');

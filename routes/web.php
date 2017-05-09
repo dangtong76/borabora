@@ -1,6 +1,8 @@
 <?php
 
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -39,12 +41,17 @@ Route::prefix('members')->group(function () {
 
 Route::prefix('products')->group(function () {
 
-    # Member Login Router
+    # PRODUCT DASHBORAD ROUT
     Route::get(
         '/',
         'ProductController@index'
     )->name('products.index');
 
+
+    Route::get(
+        '/{id}',
+        'ProductController@show'
+    )->name('products.show');
 });
 
 Route::get(
