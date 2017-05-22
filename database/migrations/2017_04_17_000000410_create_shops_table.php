@@ -19,6 +19,7 @@ class CreateShopsTable extends Migration
             $table->increments('id')->comment('쇼핑몰/부띠끄 ID');
 
             $table->string('name', 150)->index()->comment('쇼핑몰/부띠끄 이름');
+            $table->tinyInteger('crawl_yn')->default(1)->comment('크롤링 유무 1:크롤링중,null:크롤링 중단');
             $table->string('homepage')->nullable()->comment('쇼핑몰/부띠끄 사이트 주소');
             $table->string('shop_country')->nullable()->comment('쇼핑몰/부띠크 국가');
             $table->dateTime('created_at')->comment('쇼핑몰/부띠끄 정보 등록일시');

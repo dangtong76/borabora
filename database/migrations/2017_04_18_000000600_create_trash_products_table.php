@@ -31,7 +31,7 @@ class CreateTrashProductsTable extends Migration
 
             // 참조키
             $table->unsignedInteger('shop_id')->index()->comment('쇼핑몰 ID');
-            $table->unsignedInteger('shop_category_url_id')->index()->comment('해당 쇼핑몰 카테고리 URL ID');
+            $table->unsignedInteger('shopurl_id')->index()->comment('해당 쇼핑몰 카테고리 URL ID');
             $table->unsignedInteger('brand_id')->index()->comment('브랜드 ID');
 
             // 제품 정보
@@ -83,7 +83,7 @@ class CreateTrashProductsTable extends Migration
 
             // Foreign Key 관계정보
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-            $table->foreign('shop_category_url_id')->references('id')->on('category_urls')->onDelete('cascade');
+            $table->foreign('shopurl_id')->references('id')->on('category_urls')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands');
         });
     }
@@ -99,7 +99,7 @@ class CreateTrashProductsTable extends Migration
 
         Schema::table('trash_products', function (Blueprint $table) {
             $table->dropForeign(['shop_id']);
-            $table->dropForeign(['shop_category_url_id']);
+            $table->dropForeign(['shopurl_id']);
             $table->dropForeign(['brand_id']);
         });
 

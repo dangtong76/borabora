@@ -1,9 +1,9 @@
 <?php
 
-use App\Cart;
+use App\Shopurl;
 use Illuminate\Database\Seeder;
 
-class CartsTableSeeder extends Seeder
+class ShopurlsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,8 @@ class CartsTableSeeder extends Seeder
      */
     public function run()
     {
-        Cart::truncate();
-        factory(Cart::class,30)->create();
+        Shopurl::truncate();
+
+        factory(Shopurl::class, 10)->create();
     }
 }

@@ -11,9 +11,9 @@ class TrashProduct extends Model
         return $this->belongsTo(Shop::class);
     }
 
-    public function category()
+    public function shopurl()
     {
-        return $this->belongsTo(CategoryUrl::class);
+        return $this->belongsTo(Shopurl::class);
     }
 
     public function brand()

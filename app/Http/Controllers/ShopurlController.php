@@ -2,46 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Shop;
 use App\Shopurl;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class ShopController extends Controller
+class ShopurlController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        // Save Form-Input at Session
-
-        $request->flash();
-        $shops = Shop::with('products')->latest()->paginate(15);
-        //$count=$shops->first();
-        //dd($count);
-
-        // Return Result to View
-        return view('shops.shops', [
-            'shops' => $shops,
-        ]);
-    }
-
-
-    public function show(Request $request, $id)
+    public function index(Request $request, $shopid)
     {
         $request->flash();
-        $shopurls = Shopurl::with(['shop','products'])
-            ->shopid($id)
-            ->latest()->paginate(15);
+        $shopurls = Shopurl::with(['products'])
+            ->where('shop_id','=',$shopid)
+            ->latest()->paginate(20);
 
         return view('shops.shopurls', [
             'shopurls' => $shopurls,
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -64,15 +45,24 @@ class ShopController extends Controller
         //
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Shopurl  $shopCategoryUrl
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Shopurl $shopCategoryUrl)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Shop  $shop
+     * @param  \App\Shopurl  $shopCategoryUrl
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shop $shop)
+    public function edit(Shopurl $shopCategoryUrl)
     {
         //
     }
@@ -81,10 +71,10 @@ class ShopController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Shop  $shop
+     * @param  \App\Shopurl  $shopCategoryUrl
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shop $shop)
+    public function update(Request $request, Shopurl $shopCategoryUrl)
     {
         //
     }
@@ -92,11 +82,13 @@ class ShopController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Shop  $shop
+     * @param  \App\Shopurl  $shopCategoryUrl
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shop $shop)
+    public function destroy(Shopurl $shopCategoryUrl)
     {
         //
     }
+
+
 }

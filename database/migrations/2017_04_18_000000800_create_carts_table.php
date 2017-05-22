@@ -19,8 +19,11 @@ class CreateCartsTable extends Migration
             $table->increments('id')->comment('Carts 테이블의 ID');
 
             // Foreign Key
-            $table->unsignedInteger('product_id')->unique()->index()->comment('BoraBora 의 상품ID');
+            $table->unsignedInteger('product_id')->index()->comment('BoraBora 의 상품ID');
             $table->unsignedInteger('member_id')->index()->comment('User 테이블의 ID');
+
+            // Cart Type
+            $table->unsignedInteger('cart_type')->nullable()->index()->comment('카트의 종류 1:송출, 2:가격 재전송, 3:삭제');
 
             //연동정보 등록 및 변경 일시
             $table->dateTime('created_at')->index()->comment('최초 연동일자');

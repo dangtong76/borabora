@@ -19,8 +19,8 @@ class Member extends Authenticatable
         'remember_token',
     ];
 
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 }

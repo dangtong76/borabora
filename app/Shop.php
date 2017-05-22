@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
-    public function products()
+    public function Products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function product_count() {
+        return $this->hasMany(Product::class)->selectRaw('count(*) as count')->groupBy('products.id');
     }
 
     public function TrashProducts()
@@ -16,8 +20,8 @@ class Shop extends Model
         return $this->hasMany(TrashProduct::class);
     }
 
-    public function CategoryUrls()
+    public function Shopurls()
     {
-        return $this->hasMany(CategoryUrl::class);
+        return $this->hasMany(Shopurl::class);
     }
 }

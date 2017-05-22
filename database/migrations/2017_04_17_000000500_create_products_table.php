@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
 
             // 참조키
             $table->unsignedInteger('shop_id')->index()->comment('쇼핑몰 ID');
-            $table->unsignedInteger('category_url_id')->index()->comment('해당 쇼핑몰 카테고리 URL ID');
+            $table->unsignedInteger('shopurl_id')->index()->comment('해당 쇼핑몰 카테고리 URL ID');
             $table->unsignedInteger('brand_id')->index()->comment('브랜드 ID');
             $table->unsignedInteger('target_id')->nullable()->index()->comment('target 정보 연동');
 
@@ -67,13 +67,13 @@ class CreateProductsTable extends Migration
             // 크롤링 관련 정보
             $table->tinyInteger('crawl_active')->index()->comment('크롤링 수집 할성화 여부 1:활성 0:비활성');
             $table->dateTime('crawl_last_time')->comment('마지막 수집 일시');
-            $table->enum('crawl_last_status',['success','fail'])->index()->comment('최종 수집 결과');
+            $table->tinyInteger('crawl_last_status')->comment('최종 수집 결과 1:성공, 2:실패');
             $table->string('crawl_last_error',255)->index()->nullable()->comment('마지막 수집시 발생한 에러');
             $table->text('crawl_url')->comment('상품 Crawling URL');
 
             // 타겟정보
             $table->unsignedInteger('target_product_id')->nullable()->index()->comment('타겟쇼핑몰의상품ID');
-            $table->tinyInteger('target_is_opened')->nullable()->comment('타겟쇼핑몰진열여부1:진열0:미진열');
+            $table->tinyInteger('target_is_opened')->nullable()->comment('타겟쇼핑몰진열여부1:진열,0:미진열');
             $table->dateTime('target_created_at')->nullable()->comment('타겟쇼핑몰 최초 진열일시');
             $table->dateTime('target_deleted_at')->nullable()->comment('타겟쇼핑몰 삭제일시');
 
@@ -90,7 +90,7 @@ class CreateProductsTable extends Migration
 
             // Foreign Key 관계정보
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-            $table->foreign('category_url_id')->references('id')->on('category_urls')->onDelete('cascade');
+            $table->foreign('shopurl_id')->references('id')->on('shopurls')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands');
         });
     }
@@ -105,7 +105,7 @@ class CreateProductsTable extends Migration
        // Migration RollBack 시 수행 Action 정의
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['shop_id']);
-            $table->dropForeign(['category_url_id']);
+            $table->dropForeign(['shopurl_id']);
             $table->dropForeign(['brand_id']);
         });
 

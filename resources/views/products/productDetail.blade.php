@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.menu')
 @section('style')
     <style>
         .panel {

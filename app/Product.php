@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -12,9 +13,9 @@ class Product extends Model
         return $this->belongsTo(Shop::class);
     }
 
-    public function categoryurl()
+    public function shopurl()
     {
-        return $this->belongsTo(CategoryUrl::class);
+        return $this->belongsTo(Shopurl::class);
     }
 
     public function brand()
@@ -27,9 +28,9 @@ class Product extends Model
         return $this->belongsTo(Target::class);
     }
 
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
 
@@ -41,10 +42,10 @@ class Product extends Model
         }
         return $query;
     }
-    public function scopeCategoryUrl($query, $categoryurl)
+    public function scopeShopurl($query, $shopurl)
     {
-        if ($categoryurl) {
-            return $query->where('category_url_id','=',$categoryurl);
+        if ($shopurl) {
+            return $query->where('shopurl_id','=',$shopurl);
         }
         return $query;
     }

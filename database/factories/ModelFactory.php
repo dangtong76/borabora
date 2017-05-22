@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Brand;
 use App\Cart;
-use App\CategoryUrl;
+use App\Shopurl;
 use App\OriginCategory;
 use App\Product;
 use App\Shop;
@@ -47,7 +47,7 @@ $factory->define(Shop::class, function () use ($faker) {
 });
 
 
-$factory->define(CategoryUrl::class, function () use ($faker) {
+$factory->define(Shopurl::class, function () use ($faker) {
     $lastShopId = Shop::count();
     $shopId = Shop::find(rand(1, $lastShopId));
 
@@ -63,9 +63,9 @@ $factory->define(CategoryUrl::class, function () use ($faker) {
 
 $factory->define(Product::class, function () use ($faker) {
     print '|';
-    //CategoryUrls 테이블에서 1개 Row Random 으로 가져오기
-    $lastUrlId = CategoryUrl::count();
-    $urlId = CategoryUrl::find(rand(1,$lastUrlId));
+    //Shopurls 테이블에서 1개 Row Random 으로 가져오기
+    $lastUrlId = Shopurl::count();
+    $urlId = Shopurl::find(rand(1,$lastUrlId));
 
     //Brands 테이블에서 1개 Row Random 으로 가져오기
     $lastBrandId = Brand::count();
@@ -74,7 +74,7 @@ $factory->define(Product::class, function () use ($faker) {
     return [
         // 참조키
         'shop_id' => $urlId->shop_id,
-        'category_url_id' => $urlId->id,
+        'shopurl_id' => $urlId->id,
         'brand_id' => $brandId->id,
         'target_id' => $faker->randomElements([null, 1, 2],1)[0],
 
@@ -113,7 +113,7 @@ $factory->define(Product::class, function () use ($faker) {
         // 크롤링 관련 정보
         'crawl_active' => '1',
         'crawl_last_time' => $faker->dateTimeThisYear,
-        'crawl_last_status' => 'success',
+        'crawl_last_status' => rand(0,1),
         'crawl_url' => $faker->url,
 
         // 값 비교용 Hash값
@@ -132,7 +132,8 @@ $factory->define(Cart::class, function () use ($faker) {
 
     return [
         'product_id' => rand(1, 99),
-        'member_id' => $pickedMember->id,
+        'member_id' => '1',
+        'cart_type' => rand(1,3),
     ];
 });
 

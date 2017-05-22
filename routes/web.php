@@ -47,12 +47,50 @@ Route::prefix('products')->group(function () {
         'ProductController@index'
     )->name('products.index');
 
+    Route::get(
+        'news',
+        'ProductController@new'
+    )->name('products.new');
+
 
     Route::get(
-        '/{id}',
+        '{id}',
         'ProductController@show'
     )->name('products.show');
+
 });
+
+Route::prefix('shops')->group(function () {
+
+    Route::get(
+        '/',
+        'ShopController@index'
+    )->name('shops.index');
+
+    Route::get(
+        '{shopId}',
+        'ShopController@show'
+    )->name('shops.show');
+
+    Route::get(
+        '{shopid}/shopurls',
+        'ShopurlController@index'
+    )->name('shopurls.index');
+
+});
+
+
+Route::prefix('carts')->group(function () {
+
+
+    Route::get(
+        '{memberId}/menus/{menuId}',
+        'CartController@index'
+    )->name('carts.index');
+
+});
+
+
 
 Route::get(
     'password/reset',
