@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Brand;
+use App\Product;
+use App\Shopurl;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -66,6 +69,25 @@ Route::prefix('shops')->group(function () {
         '/',
         'ShopController@index'
     )->name('shops.index');
+
+    // 등록상품검색 카테고리 Select Box 리스트 (Ajax 호출)
+    Route::get('{shopId}/category.json', function ($shopId) {
+        return shopurl::where('shop_id', $shopId)->select('id', 'category_borabora_name')->get();
+    })->name('shops.getCategory');
+
+    // 등록상품검색 브랜드 Select Box 리스트 (Ajax 호출)
+    Route::get('{shopId}/brand.json', function ($shopId) {
+
+        $brands = Brand::whereIn('id', function ($query) use ($shopId) {
+            $query->select('brand_id')
+                ->from(with(new Product)->getTable())
+                ->where('shop_id', '=', $shopId);
+        })->select('id', 'brand_name')->get();
+
+        return $brands;
+    })->name('shops.getBrand');
+
+
 
     Route::get(
         '{shopId}',

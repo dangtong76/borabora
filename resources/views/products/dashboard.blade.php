@@ -89,8 +89,8 @@
                         </td>
                         <td class="col-md-1 col-lg-1">
                             <div class="form-group">
-                                <select name=shop class="form-control input-sm">
-                                    <option value="">수집소스 선택</option>
+                                <select id=shop name=shop class="form-control input-sm">
+                                    <option value="0">수집소스 선택</option>
                                     @foreach ($shops as $shop)
                                         <option value="{{ $shop->id }}" {{ old('shop') == $shop ->id ? 'selected' : '' }}>
                                             {{ $shop->name }}
@@ -101,25 +101,29 @@
                         </td>
                         <td class="col-md-1 col-lg-1">
                             <div class="form-group">
-                                <select name=brand class="form-control input-sm">
-                                    <option value="">브랜드 선택</option>
+                                <select id=brand name=brand class="form-control input-sm">
+                                    <option value="" disabled>브랜드 선택</option>
+                                    {{--
                                     @foreach ($brands as $brand)
                                         <option value="{{ $brand->id }}" {{ old('brand') == $brand ->id ? 'selected' : '' }}>
                                             {{ $brand->brand_name }}
                                         </option>
                                     @endforeach
+                                    --}}
                                 </select>
                             </div>
                         </td>
                         <td class="col-md-1 col-lg-1">
                             <div class="form-group">
-                                <select name="shopurl" class="form-control input-sm">
-                                    <option value="">수집소스 선택</option>
+                                <select id=shopurl name=shopurl class="form-control input-sm">
+                                    <option value="" disabled>카테고리 선택</option>
+                                    {{--
                                     @foreach ($shopurls as $shopurl)
                                         <option value="{{ $shopurl->id }}" {{ old('shopurl') == $shopurl->id ? 'selected' : '' }}>
                                             {{ $shopurl->category_borabora_name }}
                                         </option>
                                     @endforeach
+                                    --}}
                                 </select>
                             </div>
                         </td>
@@ -130,6 +134,16 @@
                             </div>
                         </td>
                     </tr>
+                    {{--
+                    <tr class="col-md-9 col-lg-9">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" data-provide="datepicker"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </tr>
+                    --}}
                     {!! Form::close() !!}
                 </table>
             </div>
@@ -226,6 +240,58 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $('#shop').change(function () {
+
+            $.get('/shops/' + this.value + '/brand.json', function (brands) {
+                var $brand = $('#brand');
+
+                $brand.find('option').remove().end();
+
+                if (brand.id == "{{ old('brand') }}")
+                    $brand.append('<option value=""> 카테고리 선택</option>');
+                else
+                    $brand.append('<option value="" selected> 카테고리 선택</option>');
+
+
+                $.each(brands, function (index, brand) {
+                    if (brand.id == "{{ old('brand') }}")
+                        $brand.append('<option value="' + brand.id + '" selected>' + brand.brand_name + '</option>');
+                    else
+                        $brand.append('<option value="' + brand.id + '">' + brand.brand_name + '</option>');
+
+                });
+            });
+
+
+            $.get('/shops/' + this.value + '/category.json', function (shopurls) {
+                var $shopurl = $('#shopurl');
+
+                $shopurl.find('option').remove().end();
+
+                if (shopurl.id == "{{ old('shopurl') }}")
+                    $shopurl.append('<option value=""> 카테고리 선택</option>');
+                else
+                    $shopurl.append('<option value="" selected> 카테고리 선택</option>');
+
+
+                $.each(shopurls, function (index, shopurl) {
+                    if (shopurl.id == "{{ old('shopurl') }}")
+                        $shopurl.append('<option value="' + shopurl.id + '" selected>' + shopurl.category_borabora_name + '</option>');
+                    else
+                        $shopurl.append('<option value="' + shopurl.id + '">' + shopurl.category_borabora_name + '</option>');
+
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $(".shopurl option[value='0']").attr("disabled", "disabled");
+            $('#shop').trigger("change");
+        });
+    </script>
 @endsection
 
 
