@@ -42,7 +42,7 @@
             <div class="table-responsive">
                 <table class="table  table-striped background-color: black">
                     {!! Form::open(['route' => 'products.index', 'method' => 'get','class' =>'form']) !!}
-                    <tr class="col-md-9 col-lg-9">
+                    <tr class="col-md-10 col-lg-10">
                         <td class="col-md-1 col-lg-2">
                             <div class="form-group">
                                 <h4>
@@ -80,10 +80,6 @@
                                 <label class="radio-inline">
                                     {!! Form::radio('target', '1', (Input::old('target') == '1'), array('id'=>'targetKid', 'class'=>'radio')) !!}
                                     성인
-                                </label>
-                                <label class="radio-inline">
-                                    {!! Form::radio('target', '0', (Input::old('target') == '0'), array('id'=>'targetNo', 'class'=>'radio')) !!}
-                                    미연결
                                 </label>
                             </div>
                         </td>
@@ -158,7 +154,7 @@
                     <thead>
                     <tr>
                         <th class="text-center" scope="row">
-                            <input type="checkbox" name="chkall" id="chkall"/>
+                            <input type="checkbox" name="chkall" id="chkall" class="chkall"/>
                         </th>
                         <th class="text-left"><i class="fa fa-sort"></i> 고유번호</th>
                         <th class="text-left"><i class="fa fa-sort"></i> 발란코드</th>
@@ -176,16 +172,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {{ Form::open(array('route' => 'products.action', 'method' => 'post','class' =>'form'))  }}
                     @foreach ($products as $product)
                         <tr>
                             <th class="text-center" scope="row">
-                                <input type="checkbox" name="chk[]" class="list-chkbox" value="#">
+                                <input type="checkbox" name="product_check[]" class="list-chkbox"
+                                       value="{{$product->id}}">
                             </th>
                             <td>{{ $product->id }}</td>
                             <td>{{ isset($product->target->name) ? $product->target->name : null}}</td>
                             <td>{{ isset($product->target_product_id) ? $product->target_product_id : null }}</td>
-                            <td>{{ $product->shop->name }}</td>
-                            <td>{{ $product->brand->brand_name }}</td>
+                            <td>{{ isset($product->shop->name) ? $product->shop->name : null }}</td>
+                            <td>{{ isset($product->brand->brand_name) ? $product->brand->brand_name : null }}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ isset($product->stock_max) ? $product->stock_max: '0' }}</td>
                             <td>{{ $product->crawl_last_time }}</td>
@@ -217,29 +215,66 @@
                     </tbody>
                 </table>
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-info"><i class="fa fa-cart-arrow-down"></i> Add To Cart
-                    </button>
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">송출</a></li>
-                        <li><a href="#">삭제</a></li>
-                        <li><a href="#">가격재전송</a></li>
-                    </ul>
-                </div>
 
+                <button type="submit" class="btn btn-success" value="1"><i class="glyphicon glyphicon-send"></i> 송출
+                </button>
+                <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-usd"></i> 가격재전송
+                </button>
+                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> 삭제
+                </button>
+
+
+                {!! Form::close() !!}
                 <div class="text-center">
                     {!! $products->appends(Input::except('page'))->links() !!}
                 </div>
-                <div class="alert alert-danger fade in">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    <strong>검색 결과가 없습니다.</strong> 검색을 위해 적정한 값을 선택해 주세요.
+
+
+                <div id="productModal_fail" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">에러 발생</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>이미 송출한 상품 입니다.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
+                <div id="productModal_success" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">송출 성공</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>상품송출을 완료 하였습니다.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+
 @endsection
 @section('scripts')
     <script>
@@ -251,9 +286,9 @@
                 $brand.find('option').remove().end();
 
                 if (brand.id == "{{ old('brand') }}")
-                    $brand.append('<option value=""> 카테고리 선택</option>');
+                    $brand.append('<option value=""> 브랜드 선택</option>');
                 else
-                    $brand.append('<option value="" selected> 카테고리 선택</option>');
+                    $brand.append('<option value="" selected> 브랜드 선택</option>');
 
 
                 $.each(brands, function (index, brand) {
@@ -290,7 +325,28 @@
         $(document).ready(function () {
             $(".shopurl option[value='0']").attr("disabled", "disabled");
             $('#shop').trigger("change");
+
+            $('.chkall').on('click', function () {
+                var checkAll = this.checked;
+                $('input[type=checkbox]').each(function () {
+                    this.checked = checkAll;
+                });
+            });
+
+            @if(!empty(Session::get('error_code')) && Session::get('error_code') != 'null')
+            $(function () {
+                $('#productModal_fail').modal('show');
+            });
+
+            @elseif(!empty(Session::get('error_code')) && Session::get('error_code') == 'null')
+            $(function () {
+                $('#productModal_success').modal('show');
+            });
+
+            @endif
         });
+
+
     </script>
 @endsection
 

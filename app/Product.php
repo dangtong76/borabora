@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Product extends Model
+class Product extends Model implements Sendable
 {
+    use CanBeSend;
+
     public function shop()
     {
         return $this->belongsTo(Shop::class);
@@ -33,8 +35,13 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
+    // GoDo Mall 상품 테이블 relationship(borabora.products and balaan3_co_kr.gd_goods)
+    public function gdgood()
+    {
+        return $this->hasOne(GdGood::class);
+    }
 
-
+    // Eloquent Query Scope
     public function scopeBrand($query, $brand)
     {
         if ($brand) {
@@ -63,9 +70,15 @@ class Product extends Model
 
     public function scopeTarget($query, $target)
     {
-        if ($target == '2') {
+
+        if ($target =='3') {
+            return $query->where('target_id','=','1')->orwhere('target_id','=','2');
+        }
+
+        elseif ($target == '2') {
             return $query->where('target_id','=','2');
         }
+
         elseif ($target =='1') {
             return $query->where('target_id','=','1');
         }

@@ -55,6 +55,22 @@ return [
             'engine' => null,
         ],
 
+        'gdshop' => [
+            'driver' => 'mysql',
+            'host' => env('GD_DB_HOST', '127.0.0.1'),
+            'port' => env('GD_DB_PORT', '3306'),
+            'database' => env('GD_DB_DATABASE', 'forge'),
+            'username' => env('GD_DB_USERNAME', 'forge'),
+            'password' => env('GD_DB_PASSWORD', ''),
+            'unix_socket' => env('GD_DB_SOCKET', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'strict' => true,
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

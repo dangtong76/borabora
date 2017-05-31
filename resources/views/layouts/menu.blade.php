@@ -20,8 +20,8 @@
                 </li>
                 <li class="has-sub"><a href="{{ route('products.index') }}"><span>등록상품 관리</span></a>
                     <ul>
-                        <li><a href="#"><span>발란 성인</span></a></li>
-                        <li><a href="#"><span>발란 키즈</span></a></li>
+                        <li><a href="{{ route('products.index.adult')}}"><span>발란 성인</span></a></li>
+                        <li><a href="{{ route('products.index.kid')}}"><span>발란 키즈</span></a></li>
                     </ul>
                 </li>
                 <li><a href="#"><span>상품변경 이력</span></a></li>

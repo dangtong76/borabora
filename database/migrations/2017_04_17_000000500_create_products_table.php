@@ -83,7 +83,7 @@ class CreateProductsTable extends Migration
             $table->string('hash_option')->index()->comment('옵션 해싱 정보');
 
             // 데이타 생성 및 수정 시간 정보
-            $table->dateTime('created_at')->index()->comment('상품 등록일시');
+            $table->dateTime('created_at')->index()->useCurrent()->comment('상품 등록일시');
             $table->dateTime('updated_at')->index()->comment('상품 정보 변경일시');
             $table->dateTime('deleted_at')->nullable()->comment('Software Delete 일시');
 

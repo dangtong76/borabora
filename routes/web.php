@@ -40,6 +40,12 @@ Route::prefix('members')->group(function () {
         'Auth\Member\RegisterController@register'
     )->name('members.register.submit');
 
+    Route::get(
+        'password/reset',
+        'Auth\Member\ForgotPasswordController@showLinkRequestForm'
+    )->name('password.request');
+
+
 });
 
 Route::prefix('products')->group(function () {
@@ -49,6 +55,18 @@ Route::prefix('products')->group(function () {
         '/',
         'ProductController@index'
     )->name('products.index');
+
+    Route::get(
+        'adult',
+        'ProductController@adultIndex'
+    )->name('products.index.adult');
+
+    Route::get(
+        'kid',
+        'ProductController@kidIndex'
+    )->name('products.index.kid');
+
+
 
     Route::get(
         'news',
@@ -61,7 +79,30 @@ Route::prefix('products')->group(function () {
         'ProductController@show'
     )->name('products.show');
 
+    Route::post(
+        'action',
+        'ProductController@action'
+    )->name('products.action');
+
+
 });
+
+Route::prefix('gdgoods')->group(function () {
+
+    # PRODUCT DASHBORAD ROUT
+    Route::get(
+        '/',
+        'GdGoodController@index'
+    )->name('gdgoods.index');
+
+    Route::get(
+        '{goodsno}',
+        'GdGoodController@show'
+    )->name('gdgoods.show');
+
+});
+
+
 
 Route::prefix('shops')->group(function () {
 
@@ -88,7 +129,6 @@ Route::prefix('shops')->group(function () {
     })->name('shops.getBrand');
 
 
-
     Route::get(
         '{shopId}',
         'ShopController@show'
@@ -110,14 +150,13 @@ Route::prefix('carts')->group(function () {
         'CartController@index'
     )->name('carts.index');
 
+
+
 });
 
 
 
-Route::get(
-    'password/reset',
-    'Auth\Member\ForgotPasswordController@showLinkRequestForm'
-    )->name('password.request');
+
 
 
 Route::post('logout', 'Auth\Member\LoginController@logout')->name('logout');
